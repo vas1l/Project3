@@ -205,7 +205,7 @@ class trie{
 
         temp = temp->children[position];
     }
-    if (temp != NULL && temp->is_leaf == 1){return temp->c;}
+    if (temp != NULL && temp->is_leaf == 1){return temp->ctr;}
     else {cout << "Country not found" << endl;
     return dummy;}
     }
