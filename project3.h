@@ -142,8 +142,9 @@ class trie{
         Node* children[26];
         bool is_leaf;
     };
-
-    
+   
+   Node* root = makeNode(country("dummy", "dummy", '\0', "dummy", "dummy", "dummy", "dummy", "dummy", "dummy"));
+   
    Node* makeNode(country c) {
     // Allocate memory for a TrieNode
     Node* node = (Node*) calloc (1, sizeof(Node));
@@ -169,7 +170,7 @@ class trie{
     
     public:
      
-    Node* addCountry(Node* root, country c){
+    Node* addCountry(country c){
      Node* temp = root; 
      string word = c.ISO3;
 
@@ -182,7 +183,7 @@ class trie{
         }
         else {
          cout << "Country already exists...updating with new values" << endl;
-         updateCountryinTrie(root, c);
+         updateCountryinTrie(c);
         }
        
         temp = temp->children[idx];
@@ -193,7 +194,7 @@ class trie{
    }
  
     
-    country getCountry(Node* root, string ISO3){
+    country getCountry(string ISO3){
     Node* temp = root;
     country dummy = country("dummy", "dummy", '\0', "dummy", "dummy", "dummy", "dummy", "dummy", "dummy");
     for(int i=0; ISO3[i]!='\0'; i++)
@@ -210,7 +211,7 @@ class trie{
     return dummy;}
     }
 
-    void updateCountryinTrie(Node* root, country c){
+    void updateCountryinTrie(country c){
     Node* temp = root;
     country dummy = country("dummy", "dummy", '\0', "dummy", "dummy", "dummy", "dummy", "dummy", "dummy");
     string ISO3=c.ISO3;
@@ -225,7 +226,7 @@ class trie{
             temp->ctr.updateCountry(c);
         }
      }
-    int check_divergence(Node* root, country c) {
+    int check_divergence(country c) {
     // Checks if there is branching at the last character of word
     // and returns the largest position in the word where branching occurs
     Node* temp = root;
@@ -256,7 +257,7 @@ class trie{
     return last_index;
 }
 
-char* find_longest_prefix(Node* root, country c) {
+char* find_longest_prefix(country c) {
     // Finds the longest common prefix substring of word
     // in the Trie
     string word = c.ISO3;
@@ -276,7 +277,7 @@ char* find_longest_prefix(Node* root, country c) {
     // If there is no branching from the root, this
     // means that we're matching the original string!
     // This is not what we want!
-    int branch_idx  = check_divergence(root, c) - 1;
+    int branch_idx  = check_divergence(c) - 1;
     if (branch_idx >= 0) {
         // There is branching, We must update the position
         // to the longest match and update the longest prefix
@@ -302,7 +303,7 @@ bool is_leaf_node(Node* root, country c) {
     return temp->is_leaf;
 }
 
-Node* removeCountry(Node* root, country c) {
+Node* removeCountry(country c) {
     // Will try to delete the word sequence from the Trie only it 
     // ends up in a leaf node
     string word = c.ISO3;
@@ -317,7 +318,7 @@ Node* removeCountry(Node* root, country c) {
     }
     Node* temp = root;
     // Find the longest prefix string that is not the current word
-    char* longest_prefix = find_longest_prefix(root, c);
+    char* longest_prefix = find_longest_prefix(c);
     //printf("Longest Prefix = %s\n", longest_prefix);
     if (longest_prefix[0] == '\0') {
         free(longest_prefix);
@@ -354,13 +355,13 @@ Node* removeCountry(Node* root, country c) {
     return root;
    }
 
-     void plotCountry(Node* root,string ISO3){
-        country c = getCountry(root, ISO3);
+     void plotCountry(string ISO3){
+        country c = getCountry(ISO3);
         c.PlotTemperatureChange();
     }
 
-    void printCountry(Node* root, string ISO3){
-        country c = getCountry(root, ISO3);
+    void printCountry(string ISO3){
+        country c = getCountry(ISO3);
         c.print();
     }
 
