@@ -100,14 +100,14 @@ class country{
 
 class hashTbl {
 private:
-    int size = 500;
+    int size = 1000;
     country* countries;
 
     //to convert the ISO3 string into an index
     int hashfn(const string& ISO3) {
         unsigned long hash = 0;
         for (char ch : ISO3) {
-            hash = (hash * 31 + ch) % size;
+            hash = (hash * 1087 + ch) % size;
         }
         return hash % size;
     }

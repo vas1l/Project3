@@ -12,6 +12,7 @@ int main() {
     // Create a hash table and trie
   //  hashTbl data;
 trie data2;
+hashTbl data;
  
   // Print the hash table
   //  cout << "Printing the hash table:" << endl;
@@ -39,7 +40,8 @@ trie data2;
                 if (row[i+10] != NA)
                 c.temperatureChange[1961+i] = std::stod(row[i+10]);
             }
-            data2.addCountry(c);     
+            data.addCountry(c); 
+            data2.addCountry(c);    
        }
           j++;
           int x =0;
@@ -55,7 +57,7 @@ trie data2;
     c.print();
     
     std::cout << "Searching for country with ISO3 code 'USA' in trie:" << endl;
-    data2.printCountry("USA");
+    data.printCountry("AFG");
     
         
     return 0;
