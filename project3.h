@@ -120,9 +120,6 @@ class hashTbl{
     country getCountry(string ISO3){
     }
 
-    void removeCountry(string ISO3){
-    }
-
     void plotCountry(string ISO3){
         country c = getCountry(ISO3);
         c.PlotTemperatureChange();
@@ -243,131 +240,7 @@ class trie{
             temp->ctr.updateCountry(c);
         }
      }
-    int check_divergence(country c) {
-    // Checks if there is branching at the last character of word
-    // and returns the largest position in the word where branching occurs
-    Node* temp = root;
-    string word = c.ISO3;
-    int len = word.length();
-    if (len == 0)
-        return 0;
-    // We will return the largest index where branching occurs
-    int last_index = 0;
-    for (int i=0; i < len; i++) {
-        int position = word[i] - 'A';
-        if (temp->children[position]) {
-            // If a child exists at that position
-            // we will check if there exists any other child
-            // so that branching occurs
-            for (int j=0; j<26; j++) {
-                if (j != position && temp->children[j]) {
-                    // We've found another child! This is a branch.
-                    // Update the branch position
-                    last_index = i + 1;
-                    break;
-                }
-            }
-            // Go to the next child in the sequence
-            temp = temp->children[position];
-        }
-    }
-    return last_index;
-}
-
-char* find_longest_prefix(country c) {
-    // Finds the longest common prefix substring of word
-    // in the Trie
-    string word = c.ISO3;
-    if (word[0] == '\0')
-        return NULL;
-    // Length of the longest prefix
-    int len = word.length();
-
-    // We initially set the longest prefix as the word itself,
-    // and try to back-tracking from the deepst position to
-    // a point of divergence, if it exists
-    char* longest_prefix = (char*) calloc (len + 1, sizeof(char));
-    for (int i=0; word[i] != '\0'; i++)
-        longest_prefix[i] = word[i];
-    longest_prefix[len] = '\0';
-
-    // If there is no branching from the root, this
-    // means that we're matching the original string!
-    // This is not what we want!
-    int branch_idx  = check_divergence(c) - 1;
-    if (branch_idx >= 0) {
-        // There is branching, We must update the position
-        // to the longest match and update the longest prefix
-        // by the branch index length
-        longest_prefix[branch_idx] = '\0';
-        longest_prefix = (char*) realloc (longest_prefix, (branch_idx + 1) * sizeof(char));
-    }
-
-    return longest_prefix;
-}
-
-bool is_leaf_node(Node* root, country c) {
-    // Checks if the prefix match of word and root
-    // is a leaf node
-    Node* temp = root;
-    string word = c.ISO3;
-    for (int i=0; word[i]; i++) {
-        int position = (int) word[i] - 'A';
-        if (temp->children[position]) {
-            temp = temp->children[position];
-        }
-    }
-    return temp->is_leaf;
-}
-
-void removeCountry(country c) {
-    // Removes the sequence corresponding to word
-    string word = c.ISO3;
-    if (!root)
-      
-    if (word[0] == '\0')
-       
-    // Find the deepest node in the sequence
-    if (!is_leaf_node(root, c)) {
-      
-    }
-    Node* temp = root;
-
-    char* longest_prefix = find_longest_prefix(c);
-   
-    if (longest_prefix[0] == '\0') {
-        free(longest_prefix);
-       
-    }
     
-    int i;
-    for (i=0; longest_prefix[i] != '\0'; i++) {
-        int position = (int) longest_prefix[i] - 'A';
-        if (temp->children[position] != NULL) {
-           
-            temp = temp->children[position];
-        }
-        else {
-      
-            free(longest_prefix);
-       
-        }
-    }
- 
-    int len = word.length();
-    for (; i < len; i++) {
-        int position = (int) word[i] - 'A';
-        if (temp->children[position]) {
-   
-            Node* rm_node = temp->children[position];
-            temp->children[position] = NULL;
-            releaseNode(rm_node);
-        }
-    }
-    free(longest_prefix);
-  int x =0;
-   }
-
      void plotCountry(string ISO3){
         country c = getCountry(ISO3);
         c.PlotTemperatureChange();
