@@ -26,8 +26,7 @@ class CsvReader {
         
         if (quotes == false){
             cols.push_back(col);
-            m_Rows.push_back(cols);
-            cols.clear();
+           
         }
         else{
             std::string  new_col;
@@ -45,8 +44,6 @@ class CsvReader {
             if (commas > 0) new_col= new_col.append(col.append(std::string(1, m_Delimiter)));
             
             cols.push_back(new_col);
-            m_Rows.push_back(cols);
-            cols.clear();
             quotes = false;
             int x = 0;
 
@@ -54,6 +51,8 @@ class CsvReader {
 
                   
     }
+    m_Rows.push_back(cols);
+     cols.clear();
     }
 
     public:

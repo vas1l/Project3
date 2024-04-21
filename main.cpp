@@ -22,7 +22,7 @@ trie data2;
     CsvReader reader(file, ',');
     reader.Parse();
     int j = 0;
-    string NA = "NA";
+    string NA = "";
       for (auto const &row : reader.GetRows()) {
       if (j != 0){
             country c;
@@ -35,9 +35,9 @@ trie data2;
             c.CTS_CODE = row[7];
             c.CTS_NAME = row[8];
             c.CTS_FULL_DESCRIPTION = row[9];
-            for (int i = 0; i < row.size()-17; i++){
-                if (row[i+17] != NA)
-                c.temperatureChange[1961+i] = std::stod(row[i+17]);
+            for (int i = 0; i < row.size()-10; i++){
+                if (row[i+10] != NA)
+                c.temperatureChange[1961+i] = std::stod(row[i+10]);
             }
             data2.addCountry(c);     
        }
