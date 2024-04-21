@@ -140,21 +140,35 @@ class trie{
     struct Node{
         country ctr;
         Node* children[26];
-        bool is_leaf;
+        bool is_leaf = false;
+
+    Node(country c) {
+        ctr = c;
+        for (int i=0; i<26; i++)
+            children[i] = NULL;
+            is_leaf = true;
+    }
+
+    /*string dummy_ISO3 = "\0";
+    string dummy_name = "\0";
+    string dummy_ISO2 = "\0";
+    string dumm_ISO3 = "\0";
+    string dummy_Indicator = "\0";
+    string dummy_Unit = "\0";
+    string dummy_Source = "\0";
+    string dummy_CTS_CODE = "\0";
+    string dummy_CTS_NAME = "\0";
+    string dummy_CTS_FULL_DESCRIPTION = "\0";*/
+ 
+    Node() {
+        ctr = country();
+        for (int i=0; i<26; i++)
+            children[i] = NULL;
+            is_leaf = false;
+    };
     };
    
-   Node* root = makeNode(country("dummy", "dummy", '\0', "dummy", "dummy", "dummy", "dummy", "dummy", "dummy"));
-   
-   Node* makeNode(country c) {
-    // Allocate memory for a TrieNode
-    Node* node = (Node*) calloc (1, sizeof(Node));
-    for (int i=0; i<26; i++)
-        node->children[i] = NULL;
-    node->is_leaf = false;
-    node->ctr = c;
-    return node;
-   }
-
+   Node* root = new Node();
    void releaseNode(Node* node) {
     // Free the trienode sequence
     for(int i=0; i<26; i++) {
@@ -170,16 +184,19 @@ class trie{
     
     public:
      
-    Node* addCountry(country c){
+    void addCountry(country c){
      Node* temp = root; 
      string word = c.ISO3;
+     
 
     for (int i=0; word[i] != '\0'; i++) {
        
-        int idx = (int) word[i] - 'a';
+        int idx = (int) word[i] - 'A';
         if (temp->children[idx] == NULL) {
             
-            temp->children[idx] = makeNode(c);
+            temp->children[idx]= new Node(c);
+          //  temp->is_leaf = true;
+
         }
         else {
          cout << "Country already exists...updating with new values" << endl;
@@ -190,16 +207,16 @@ class trie{
     }
     
     temp->is_leaf = true;
-    return root;
+    
    }
  
     
     country getCountry(string ISO3){
     Node* temp = root;
-    country dummy = country("dummy", "dummy", '\0', "dummy", "dummy", "dummy", "dummy", "dummy", "dummy");
+    country dummy = country();
     for(int i=0; ISO3[i]!='\0'; i++)
     {
-        int position = ISO3[i] - 'a';
+        int position = ISO3[i] - 'A';
         if (temp->children[position] == NULL)
             {cout << "Country not found" << endl;
             return dummy;}
@@ -213,11 +230,11 @@ class trie{
 
     void updateCountryinTrie(country c){
     Node* temp = root;
-    country dummy = country("dummy", "dummy", '\0', "dummy", "dummy", "dummy", "dummy", "dummy", "dummy");
+    //country dummy = country();
     string ISO3=c.ISO3;
     for(int i=0; ISO3[i]!='\0'; i++)
     {
-        int position = ISO3[i] - 'a';
+        int position = ISO3[i] - 'A';
         if (temp->children[position] == NULL) return;
                        
         temp = temp->children[position];
@@ -237,7 +254,7 @@ class trie{
     // We will return the largest index where branching occurs
     int last_index = 0;
     for (int i=0; i < len; i++) {
-        int position = word[i] - 'a';
+        int position = word[i] - 'A';
         if (temp->children[position]) {
             // If a child exists at that position
             // we will check if there exists any other child
@@ -295,7 +312,7 @@ bool is_leaf_node(Node* root, country c) {
     Node* temp = root;
     string word = c.ISO3;
     for (int i=0; word[i]; i++) {
-        int position = (int) word[i] - 'a';
+        int position = (int) word[i] - 'A';
         if (temp->children[position]) {
             temp = temp->children[position];
         }
@@ -303,56 +320,52 @@ bool is_leaf_node(Node* root, country c) {
     return temp->is_leaf;
 }
 
-Node* removeCountry(country c) {
-    // Will try to delete the word sequence from the Trie only it 
-    // ends up in a leaf node
+void removeCountry(country c) {
+    // Removes the sequence corresponding to word
     string word = c.ISO3;
     if (!root)
-        return NULL;
+      
     if (word[0] == '\0')
-        return root;
-    // If the node corresponding to the match is not a leaf node,
-    // we stop
+       
+    // Find the deepest node in the sequence
     if (!is_leaf_node(root, c)) {
-        return root;
+      
     }
     Node* temp = root;
-    // Find the longest prefix string that is not the current word
+
     char* longest_prefix = find_longest_prefix(c);
-    //printf("Longest Prefix = %s\n", longest_prefix);
+   
     if (longest_prefix[0] == '\0') {
         free(longest_prefix);
-        return root;
+       
     }
-    // Keep track of position in the Trie
+    
     int i;
     for (i=0; longest_prefix[i] != '\0'; i++) {
-        int position = (int) longest_prefix[i] - 'a';
+        int position = (int) longest_prefix[i] - 'A';
         if (temp->children[position] != NULL) {
-            // Keep moving to the deepest node in the common prefix
+           
             temp = temp->children[position];
         }
         else {
-            // There is no such node. Simply return.
+      
             free(longest_prefix);
-            return root;
+       
         }
     }
-    // Now, we have reached the deepest common node between
-    // the two strings. We need to delete the sequence
-    // corresponding to word
+ 
     int len = word.length();
     for (; i < len; i++) {
-        int position = (int) word[i] - 'a';
+        int position = (int) word[i] - 'A';
         if (temp->children[position]) {
-            // Delete the remaining sequence
+   
             Node* rm_node = temp->children[position];
             temp->children[position] = NULL;
             releaseNode(rm_node);
         }
     }
     free(longest_prefix);
-    return root;
+  int x =0;
    }
 
      void plotCountry(string ISO3){
