@@ -14,7 +14,7 @@ int main() {
     
     // Read the CSV file
    // readCSV("data.csv", data, data2);
-
+//testing for trie class
 country1.name = "Afghanistan, Islamic Rep. of";
 country1.ISO2 = "AF";
 country1.ISO3 = "AFG";

@@ -167,7 +167,7 @@ class trie{
    
    Node* root = new Node();
    void releaseNode(Node* node) {
-    // Free the trienode sequence
+    // Free the node series
     for(int i=0; i<26; i++) {
         if (node->children[i] != NULL) {
             releaseNode(node->children[i]);
