@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <regex>
-
+//modified code  from stack exchange - https://codereview.stackexchange.com/questions/268180/simple-lightweight-csv-reader-in-c
 class CsvReader {
     using Delimiter = const char;
     using Rows = std::vector<std::vector<std::string>>;
@@ -12,7 +12,7 @@ class CsvReader {
     std::string m_FileName;
     Delimiter m_Delimiter;
     Rows m_Rows;
-
+    //parse line function that reads the csv file and seperates according to quotations and commas
     void ParseLine(const std::string &line) {
 
         std::stringstream tokenizer(line);
@@ -32,7 +32,7 @@ class CsvReader {
             std::string  new_col;
             new_col = col;
             int commas = 0;
-          //  int m = std::count(col.begin(), col.end(), '\"');
+        
             std::getline(tokenizer, col, m_Delimiter);
             new_col= new_col.append(col.append(std::string(1, m_Delimiter)));
             while (std::count(col.begin(), col.end(), '\"') == 0)

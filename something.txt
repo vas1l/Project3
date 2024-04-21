@@ -1,0 +1,11 @@
+ if (static_cast<size_t>(std::count(col.begin(), col.end(), '"')) % 2 != 0)
+                {
+                    no_quotes = !no_quotes;
+                }
+
+                push_col += col + (no_quotes ? "" : ",");
+
+           if(no_quotes) {
+            cols.push_back(col);
+            m_Rows.push_back(cols);
+           }
