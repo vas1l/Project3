@@ -154,9 +154,10 @@ public:
         }
     }
 };
-
+//modified trie class, used digital ocean as reference - https://www.digitalocean.com/community/tutorials/trie-data-structure-in-c-plus-plus
 class trie{
     private:
+    //node struct
     struct Node{
         country ctr;
         Node* children[26];
@@ -169,16 +170,7 @@ class trie{
             is_leaf = true;
     }
 
-    /*string dummy_ISO3 = "\0";
-    string dummy_name = "\0";
-    string dummy_ISO2 = "\0";
-    string dumm_ISO3 = "\0";
-    string dummy_Indicator = "\0";
-    string dummy_Unit = "\0";
-    string dummy_Source = "\0";
-    string dummy_CTS_CODE = "\0";
-    string dummy_CTS_NAME = "\0";
-    string dummy_CTS_FULL_DESCRIPTION = "\0";*/
+
  
     Node() {
         ctr = country();
@@ -203,7 +195,7 @@ class trie{
    }
     
     public:
-     
+    //add country using ISO3 code
     void addCountry(country c){
      Node* temp = root; 
      string word = c.ISO3;
@@ -215,7 +207,7 @@ class trie{
         if (temp->children[idx] == NULL) {
             
             temp->children[idx]= new Node(c);
-          //  temp->is_leaf = true;
+
 
         }
         else {
@@ -230,7 +222,7 @@ class trie{
     
    }
  
-    
+    //getcountry method to retrieve a country's data
     country getCountry(string ISO3){
     Node* temp = root;
     country dummy = country();
@@ -247,10 +239,10 @@ class trie{
     else {cout << "Country not found" << endl;
     return dummy;}
     }
-
+    //update country method to update a country's data
     void updateCountryinTrie(country c){
     Node* temp = root;
-    //country dummy = country();
+   
     string ISO3=c.ISO3;
     for(int i=0; ISO3[i]!='\0'; i++)
     {
@@ -268,7 +260,7 @@ class trie{
         country c = getCountry(ISO3);
         c.PlotTemperatureChange();
     }
-
+    //print country method
     void printCountry(string ISO3){
         country c = getCountry(ISO3);
         c.print();
