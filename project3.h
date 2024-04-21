@@ -98,38 +98,61 @@ class country{
     
 };
 
-class hashTbl{
-    private:
+class hashTbl {
+private:
     int size = 500;
-    // change the hash function to take in a country.ISO3 and return an integer - also make it more sophisticated
-    int hashfn(string ISO3){
-        unsigned long i = 0;
-        for(int j = 0; ISO3[j];i++){
-            
-            i=i+ISO3[j] ;
-                   }
-        return i%size;
-    }
-    
-    public:
-    country* countries = new country[size];
-    
-    void addCountry(country c){
-           }
-    
-    country getCountry(string ISO3){
+    country* countries;
+
+    //to convert the ISO3 string into an index
+    int hashfn(const string& ISO3) {
+        unsigned long hash = 0;
+        for (char ch : ISO3) {
+            hash = (hash * 31 + ch) % size;
+        }
+        return hash % size;
     }
 
-    void plotCountry(string ISO3){
+public:
+    hashTbl() {
+        countries = new country[size];
+        for (int i = 0; i < size; ++i) {
+            countries[i] = country();  // Initialize each element with an empty country
+        }
+    }
+
+    ~hashTbl() {
+        delete[] countries;
+    }
+
+
+    void addCountry(const country& c) {
+        int index = hashfn(c.ISO3);
+        countries[index] = c;
+    }
+
+    country getCountry(const string& ISO3) {
+        int index = hashfn(ISO3);
+        return countries[index];
+    }
+
+    void plotCountry(const string& ISO3) {
         country c = getCountry(ISO3);
         c.PlotTemperatureChange();
     }
 
-    void printCountry(string ISO3){
+    void printCountry(const string& ISO3) {
         country c = getCountry(ISO3);
         c.print();
     }
 
+    void printTable() {
+        for (int i = 0; i < size; ++i) {
+            if (countries[i].ISO3 != "") {  // Only print non-empty entries
+                std::cout << "Index " << i << ": " << std::endl;
+                countries[i].print();
+            }
+        }
+    }
 };
 
 class trie{
