@@ -19,7 +19,7 @@ hashTbl data;
   //  data2.printTable();
 
   // Load the csv into trie, hash
-    std::string file = "Indicator_3_1_Climate_Indicators_Annual_Mean_Global_Surface_Temperature_577579683071085080.csv";
+    std::string file = "C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\data.csv"; //replace with your path
     CsvReader reader(file, ',');
     reader.Parse();
     int j = 0;
@@ -58,6 +58,7 @@ hashTbl data;
     
     std::cout << "Searching for country with ISO3 code 'USA' in trie:" << endl;
     data.printCountry("AFG");
+    data.outputCountryInfo("AFG");
     
         
     return 0;

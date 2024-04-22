@@ -153,6 +153,36 @@ public:
             }
         }
     }
+
+    void outputCountryInfo(const std::string& ISO3) {
+        string filepath = "C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\country_data.txt"; //replace with your path
+        int index = hashfn(ISO3);
+        std::ofstream file(filepath);
+        if (!file.is_open()) {
+            std::cerr << "Failed to open file: " << filepath << std::endl;
+            return;
+        }
+
+        if (countries[index].ISO3 == ISO3) { // Check if the correct country is at this index
+            file << "Country: " << countries[index].name << std::endl;
+            file << "ISO2: " << countries[index].ISO2 << std::endl;
+            file << "ISO3: " << countries[index].ISO3 << std::endl;
+            file << "Indicator: " << countries[index].Indicator << std::endl;
+            file << "Unit: " << countries[index].Unit << std::endl;
+            file << "Source: " << countries[index].Source << std::endl;
+            file << "CTS_CODE: " << countries[index].CTS_CODE << std::endl;
+            file << "CTS_NAME: " << countries[index].CTS_NAME << std::endl;
+            file << "CTS_FULL_DESCRIPTION: " << countries[index].CTS_FULL_DESCRIPTION << std::endl;
+            file << "Temperature Change:" << std::endl;
+            for (auto& temp : countries[index].temperatureChange) {
+                file << temp.first << ": " << temp.second << std::endl;
+            }
+        } else {
+            file << "Country not found." << std::endl;
+        }
+
+        file.close();
+    }
 };
 //modified trie class, used digital ocean as reference - https://www.digitalocean.com/community/tutorials/trie-data-structure-in-c-plus-plus
 class trie{

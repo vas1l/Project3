@@ -1,0 +1,73 @@
+Country: "Afghanistan Islamic Rep. of",
+ISO2: AF
+ISO3: AFG
+Indicator: "Temperature change with respect to a baseline climatology corresponding to the period 1951-1980",
+Unit: Degree Celsius
+Source: "Food and Agriculture Organization of the United Nations (FAO). 2022. FAOSTAT Climate Change Climate Indicators, Temperature change. License: CC BY-NC-SA 3.0 IGO. Extracted from: https://www.fao.org/faostat/en/#data/ET. Accessed on 2023-03-28.", Temperature change. License: CC BY-NC-SA 3.0 IGO. Extracted from: https://www.fao.org/faostat/en/#data/ET. Accessed on 2023-03-28.",,
+CTS_CODE: ECCS
+CTS_NAME: Surface Temperature Change
+CTS_FULL_DESCRIPTION: "Environment Climate Change, Climate and Weather, Surface Temperature Change", Surface Temperature Change",,
+Temperature Change:
+1961: -0.126
+1962: -0.173
+1963: 0.844
+1964: -0.751
+1965: -0.22
+1966: 0.239
+1967: -0.348
+1968: -0.398
+1969: -0.513
+1970: 0.843
+1971: 0.642
+1972: -1.095
+1973: 0.264
+1974: -0.466
+1975: -0.442
+1976: -0.291
+1977: 0.544
+1978: 0.12
+1979: 0.38
+1980: 0.655
+1981: 0.558
+1982: -0.286
+1983: 0.24
+1984: 0.252
+1985: 0.397
+1986: -0.015
+1987: 0.493
+1988: 1.035
+1989: 0.015
+1990: 0.925
+1991: -0.051
+1992: -0.212
+1993: 0.254
+1994: 0.546
+1995: 0.457
+1996: -0.093
+1997: 0.46
+1998: 0.664
+1999: 1.271
+2000: 1.064
+2001: 1.377
+2002: 1.457
+2003: 0.71
+2004: 1.482
+2005: 0.513
+2006: 1.838
+2007: 0.794
+2008: 0.808
+2009: 0.948
+2010: 1.664
+2011: 1.455
+2012: 0.271
+2013: 1.345
+2014: 0.521
+2015: 1.204
+2016: 1.612
+2017: 1.642
+2018: 1.624
+2019: 0.991
+2020: 0.587
+2021: 1.475
+2022: 2.154
+2023: 1.956
