@@ -11,7 +11,7 @@ def read_data(filepath):
         for line in lines:
             line = line.strip()
             if line.startswith("Country:"):
-                country_name = line.split('"')[1]
+                country_name = line.split(':')[1]
 
             if line.startswith("Temperature Change:"):
                 start_recording = True

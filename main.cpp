@@ -1,32 +1,35 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <unordered_set>
+#include <vector>
 #include "project3.h"
 #include "CsvReader.h"
-
 
 using namespace std;
 
 int main() {
-// Create a hash table and trie
+    trie data2;
+    hashTbl data;
 
-trie data2;
-hashTbl data;
- 
-  // Print the hash table
-  //  cout << "Printing the hash table:" << endl;
-  //  data2.printTable();
-
-  // Load the csv into trie, hash
-    std::string file = "data.csv"; //replace with your path
+    string file = "C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\data.csv";
     CsvReader reader(file, ',');
-    reader.Parse();
-    int j = 0;
-    string NA = "";
-      for (auto const &row : reader.GetRows()) {
-      if (j != 0){
-            country c;
+    if (!reader.Parse()) {
+        cerr << "Failed to open or parse the CSV file." << endl;
+        return 1;
+    }
+
+    vector<vector<string>> rows = reader.GetRows();
+    if (rows.empty()) {
+        cerr << "No data in CSV file." << endl;
+        return 1;
+    }
+
+    for (size_t i = 1; i < rows.size(); ++i) {
+        const auto& row = rows[i];
+        if (row.size() < 10) continue; // Ensure there are enough columns
+
+        country c;
+        try {
             c.name = row[1];
             c.ISO2 = row[2];
             c.ISO3 = row[3];
@@ -36,52 +39,37 @@ hashTbl data;
             c.CTS_CODE = row[7];
             c.CTS_NAME = row[8];
             c.CTS_FULL_DESCRIPTION = row[9];
-            for (int i = 0; i < row.size()-10; i++){
-                if (row[i+10] != NA)
-                c.temperatureChange[1961+i] = std::stod(row[i+10]);
+            for (size_t j = 10; j < row.size(); ++j) {
+                if (!row[j].empty() && row[j] != "NA")
+                    c.temperatureChange[1961 + (j - 10)] = stod(row[j]);
             }
-            c.computeTrend();
-            data.addCountry(c); 
-            data2.addCountry(c);    
-       }
-          j++;
-  
+        } catch (const std::exception& e) {
+            cerr << "Error processing data for country: " << c.ISO3 << " - " << e.what() << endl;
+            continue; // Skip to next row on error
         }
 
-  
-  data2.printRanking();
+        c.computeTrend();
+        data.addCountry(c);
+        data2.addCountry(c);
+    }
 
-// Search for a country in the hash table
-    std::cout << "Getting for country with ISO3 code 'USA' in TRIE and printing from the COUNTRY class:" << endl;
- //   data.printCountry("USA");
- 
+    data2.printRanking();
+    data.computeAndPrintRanking();
+    data2.clearFile("C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\country_data.txt");
+    data.outputCountryInfo("AFG");
+    //data2.outputCountryInfo2(data2.getRoot(),"USA");
+
+    cout << "Getting for country with ISO3 code 'USA' in TRIE and printing from the COUNTRY class:" << endl;
     country c = data2.getCountry("USA");
     c.print();
-   // Eigen::Vector2f Trend = c.computeTrend();
     c.printTrend();
-    std::cout << "==================================================================================" << endl;
 
-    std::cout << "Searching for country with ISO3 code 'USA' and printing it from the TRIE class:" << endl;
-    data2.printCountry("USA");
-
-        std::cout << "==================================================================================" << endl;
-    
-    std::cout << "Getting for country with ISO3 code 'USA' in HASH and printing from the COUNTRY class:" << endl;
+    cout << "==================================================================================" << endl;
+    cout << "Searching for country with ISO3 code 'USA' and printing it from the HASH class:" << endl;
     country c2 = data.getCountry("USA");
     c2.print();
 
-    std::cout << "==================================================================================" << endl;
+    cout << "==================================================================================" << endl;
 
-    std::cout << "Searching for country with ISO3 code 'USA' and printing it from the HASH class:" << endl;
-    // data2.plotCountry("USA");
-
-    data.printCountry("USA");
-    data2.outputCountryInfo2(data2.getRoot(), "USA");
-    
-    std::cout << "==================================================================================" << endl;
-
-  // data.printTable();
-  //  data2.printTrie();
-        
     return 0;
 }

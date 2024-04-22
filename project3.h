@@ -141,7 +141,7 @@ private:
         }
         return hash % size;
     }
-    std::vector<country> countries;   
+
 
 public:
     hashTbl() {
@@ -218,6 +218,29 @@ public:
         }
 
         file.close();
+    }
+    void computeAndPrintRanking() {
+        std::vector<country> countriesToRank;
+
+        for (int i = 0; i < size; ++i) {
+            if (!countries[i].ISO3.empty()) {
+                countriesToRank.push_back(countries[i]);
+            }
+        }
+
+        std::sort(countriesToRank.begin(), countriesToRank.end(), [](const country& a, const country& b) {
+            return a.linear_fit[1] < b.linear_fit[1];  // Ascending order sort based on temperature trend
+        });
+
+        cout << "==================================================================================" << endl;
+        cout << "Ranking of Countries Based on Temperature Change TREND in Increasing Order: " << endl;
+        int rank = 1;
+        for (const country& c : countriesToRank) {
+            cout << "Rank " << rank++ << ": " << c.name
+                 << " ; SCORE: " << c.linear_fit[1] << " " << c.Unit << endl;
+        }
+        cout << "Finished printing Ranking of Countries Based on Temperature Change TREND." << endl;
+        cout << "==================================================================================" << endl;
     }
 };
 //modified trie class, used digital ocean as reference - https://www.digitalocean.com/community/tutorials/trie-data-structure-in-c-plus-plus
@@ -411,13 +434,16 @@ class trie{
         
         }
     }
-    void outputCountryInfo2(Node* node, const std::string& ISO3) {
-        std::string filepath = "C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\country_data.txt";
+    void clearFile(std::string filepath){
         std::ofstream clear;
         clear.open(filepath, std::ofstream::out | std::ofstream::trunc);
         clear.close();
-        std::ofstream file(filepath);
+   }
+    void outputCountryInfo2(Node* node, const std::string& ISO3) {
+        std::string filepath = "C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\country_data.txt";
+
     if (node->is_leaf && node->ctr.ISO3 == ISO3) {
+        std::ofstream file(filepath);
         file << "Country: " << node->ctr.name << std::endl;
         file << "ISO2: " << node->ctr.ISO2 << std::endl;
         file << "ISO3: " << node->ctr.ISO3 << std::endl;
@@ -431,6 +457,7 @@ class trie{
         for (auto& temp : node->ctr.temperatureChange) {
             file << temp.first << ": " << temp.second << std::endl;
         }
+        file.close();
         return;
     }
 
@@ -439,7 +466,7 @@ class trie{
             outputCountryInfo2(node->children[i], ISO3);
         }
     }
-    file.close();
+
 }
 };
 
