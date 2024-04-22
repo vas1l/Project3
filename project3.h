@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <algorithm> 
 #include <sstream>
+#include <fstream>
 
 using namespace std;
 /*
@@ -157,6 +158,9 @@ public:
     void outputCountryInfo(const std::string& ISO3) {
         string filepath = "C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\country_data.txt"; //replace with your path
         int index = hashfn(ISO3);
+        std::ofstream clear;
+        clear.open(filepath, std::ofstream::out | std::ofstream::trunc);
+        clear.close();
         std::ofstream file(filepath);
         if (!file.is_open()) {
             std::cerr << "Failed to open file: " << filepath << std::endl;
