@@ -82,7 +82,6 @@ class country{
     void updateCountry(country c){
         name = c.name;
         ISO2 = c.ISO2;
-      //  ISO3 = c.ISO3;  
         Indicator = c.Indicator;
         Unit = c.Unit;
         Source = c.Source;

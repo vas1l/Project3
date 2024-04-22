@@ -26,7 +26,7 @@ int main() {
 
     for (size_t i = 1; i < rows.size(); ++i) {
         const auto& row = rows[i];
-        if (row.size() < 10) continue; // Ensure there are enough columns
+        if (row.size() < 10) continue;
 
         country c;
         try {
@@ -56,8 +56,8 @@ int main() {
     data2.printRanking();
     data.computeAndPrintRanking();
     data2.clearFile("C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\country_data.txt");
-    data.outputCountryInfo("AFG");
-    //data2.outputCountryInfo2(data2.getRoot(),"USA");
+    //data.outputCountryInfo("AFG");
+    data2.outputCountryInfo2(data2.getRoot(),"USA");
 
     cout << "Getting for country with ISO3 code 'USA' in TRIE and printing from the COUNTRY class:" << endl;
     country c = data2.getCountry("USA");
