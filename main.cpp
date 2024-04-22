@@ -9,8 +9,8 @@
 using namespace std;
 
 int main() {
-    // Create a hash table and trie
-  //  hashTbl data;
+// Create a hash table and trie
+
 trie data2;
 hashTbl data;
  
@@ -19,7 +19,7 @@ hashTbl data;
   //  data2.printTable();
 
   // Load the csv into trie, hash
-    std::string file = "C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\data.csv"; //replace with your path
+    std::string file = "data.csv"; //replace with your path
     CsvReader reader(file, ',');
     reader.Parse();
     int j = 0;
@@ -40,26 +40,47 @@ hashTbl data;
                 if (row[i+10] != NA)
                 c.temperatureChange[1961+i] = std::stod(row[i+10]);
             }
+            c.computeTrend();
             data.addCountry(c); 
             data2.addCountry(c);    
        }
           j++;
-          int x =0;
+  
         }
 
-    int y = 0;  
+  
+  data2.printRanking();
 
 // Search for a country in the hash table
-    std::cout << "Searching for country with ISO3 code 'USA' in trie:" << endl;
+    std::cout << "Getting for country with ISO3 code 'USA' in TRIE and printing from the COUNTRY class:" << endl;
  //   data.printCountry("USA");
-    
+ 
     country c = data2.getCountry("USA");
     c.print();
+   // Eigen::Vector2f Trend = c.computeTrend();
+    c.printTrend();
+    std::cout << "==================================================================================" << endl;
+
+    std::cout << "Searching for country with ISO3 code 'USA' and printing it from the TRIE class:" << endl;
+    data2.printCountry("USA");
+
+        std::cout << "==================================================================================" << endl;
     
-    std::cout << "Searching for country with ISO3 code 'USA' in trie:" << endl;
-    data.printCountry("AFG");
-    data.outputCountryInfo("AFG");
+    std::cout << "Getting for country with ISO3 code 'USA' in HASH and printing from the COUNTRY class:" << endl;
+    country c2 = data.getCountry("USA");
+    c2.print();
+
+    std::cout << "==================================================================================" << endl;
+
+    std::cout << "Searching for country with ISO3 code 'USA' and printing it from the HASH class:" << endl;
+    // data2.plotCountry("USA");
+
+    data.printCountry("USA");
     
+    std::cout << "==================================================================================" << endl;
+
+  // data.printTable();
+  //  data2.printTrie();
         
     return 0;
 }
