@@ -155,6 +155,8 @@ public:
         delete[] countries;
     }
 
+    
+
 
     void addCountry(const country& c) {
         int index = hashfn(c.ISO3);
@@ -316,6 +318,9 @@ class trie{
     });
     }
     public:
+    Node* getRoot(){
+        return this->root;
+    }
     //add country using ISO3 code
     void addCountry(country c){
      Node* temp = root; 
@@ -406,10 +411,12 @@ class trie{
         
         }
     }
-    void outputCountryInfo2(Node* node, const std::string& ISO3, std::ofstream& file) {
+    void outputCountryInfo2(Node* node, const std::string& ISO3) {
+        std::string filepath = "C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\country_data.txt";
         std::ofstream clear;
-        clear.open("C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\country_data.txt", std::ofstream::out | std::ofstream::trunc);
+        clear.open(filepath, std::ofstream::out | std::ofstream::trunc);
         clear.close();
+        std::ofstream file(filepath);
     if (node->is_leaf && node->ctr.ISO3 == ISO3) {
         file << "Country: " << node->ctr.name << std::endl;
         file << "ISO2: " << node->ctr.ISO2 << std::endl;
@@ -429,24 +436,11 @@ class trie{
 
     for (int i = 0; i < 26; i++) {
         if (node->children[i] != NULL) {
-            outputCountryInfo2(node->children[i], ISO3, file);
+            outputCountryInfo2(node->children[i], ISO3);
         }
     }
-}
-
-void outputCountryInfo(Node* root, const std::string& ISO3) {
-    string filepath = "C:\\Users\\dalva\\OneDrive\\Desktop\\Project3\\Project3\\country_data.txt"; //replace with your path
-    std::ofstream file(filepath);
-    if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filepath << std::endl;
-        return;
-    }
-
-    outputCountryInfo2(root, ISO3, file); // Replace 'root' with the root of your Trie
-
     file.close();
 }
-
 };
 
 

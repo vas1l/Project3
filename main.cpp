@@ -76,6 +76,7 @@ hashTbl data;
     // data2.plotCountry("USA");
 
     data.printCountry("USA");
+    data2.outputCountryInfo2(data2.getRoot(), "USA");
     
     std::cout << "==================================================================================" << endl;
 
